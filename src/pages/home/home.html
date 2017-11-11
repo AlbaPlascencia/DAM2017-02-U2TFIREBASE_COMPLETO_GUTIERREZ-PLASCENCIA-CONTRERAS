@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            To do list
+        </ion-title>
+        <ion-buttons start>
+
+            <button ion-button (click)="presentAlert()"> <ion-icon name="information-circle"></ion-icon></button>
+
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding class="bg" text-right>
+    <p class="let" text-left>My list </p>
+    <ion-item class="f1">
+        <input type="text" [(ngModel)]="newTask.name" placeholder="Add a Task">
+        <button ion-button class="botones" (click)="addTask(newTask)"><ion-icon name="add" ></ion-icon></button>
+    </ion-item>
+
+
+    <ion-list>
+        <p class="let" text-left>Things to do: </p>
+        <ion-item-sliding *ngFor="let task of tasks | async" class="f1">
+            <ion-item class="f1">
+                <input type="text" [(ngModel)]="task.name" [ngClass]="task.check ? 't1': 'f1'" [disabled]="task.check">
+
+                <label class="checkbox">
+                    <input type="checkbox" [(ngModel)]="task.check" (click)="updateCheck(task.$key, !task.check)">
+                </label>
+
+            </ion-item>
+
+            <ion-item-options side="left">
+                <button item-left ion-button class="botones" side="right" (click)="updateTask(task.$key, task.name)"> <ion-icon ios="ios-brush" md="md-brush"></ion-icon></button>
+                <button item-left ion-button color="danger" (click)="removeTask(task)"><ion-icon name="trash"></ion-icon></button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>
